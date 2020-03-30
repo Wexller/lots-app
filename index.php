@@ -1,6 +1,4 @@
 <?
-require_once 'app/lib/Dev.php';
-
 use app\core\Router;
 
 spl_autoload_register(function ($class) {

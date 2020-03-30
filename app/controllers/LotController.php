@@ -12,7 +12,7 @@ Class LotController extends Controller {
       'lots' => $this->model->getLots(),
       'currencies' => $this->model->getCurrencies(),
     );
-    $this->view->render('Main page', $vars);
+    $this->view->render('Список лотов', $vars);
   }
 
   // Экшн незавершённых лотов
@@ -21,7 +21,7 @@ Class LotController extends Controller {
       'statuses' => $this->getStatuses(),
       'lots' => $this->model->getLots(['available' => true]),
     );
-    $this->view->render('Main page', $vars);
+    $this->view->render('Список неподтверждённых лотов', $vars);
   }
 
   // Экшн создания лота
