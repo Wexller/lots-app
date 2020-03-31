@@ -36,6 +36,11 @@ Class LotController extends Controller {
     echo json_encode($this->model->update($_POST));
   }
 
+  // Получение текущего счетчика обновления базы
+  public function counterAction() {
+    echo json_encode(['value' =>  intval($this->model->getCounter())]);
+  }
+
   // Получение списка статусов
   private function getStatuses() {
     return require_once 'app/config/lotStatuses.php';

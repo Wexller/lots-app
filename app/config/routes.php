@@ -20,4 +20,9 @@ return array(
     'controller' => 'lot',
     'action' => 'update',
   ),
+
+  'counter' => array(
+    'controller' => 'lot',
+    'action' => 'counter',
+  ),
 );

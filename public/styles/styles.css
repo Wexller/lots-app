@@ -93,6 +93,10 @@ footer {
   background-color: #ffdd2d;
 }
 
+/*
+** Список лотов
+*/
+
 .section-lots-list {
   border-radius: 8px;
   box-shadow: 0 0 0 1px #e7e8ea;
@@ -262,30 +266,28 @@ footer {
   transform: translateZ(0);
   will-change: top,font-size,color;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .hidden {
   display: none;
 }
 
+.error-message {
+  position: absolute;
+  bottom: -22px;
+  color: red;
+}
 
+.form-field.error,
+.form-field.error .dropdown-el,
+.form-field.error .dropdown-el.expanded{
+  border-color: red;
+}
 
 /*
-** SELECT
+** Select
 */
-
-
-/*body {*/
-/*  text-align: center;*/
-/*  background: #ebf4fb;*/
-/*  min-height: 95vh;*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*  border-bottom: 5vh solid #3694d7;*/
-/*  font-family: "Myriad Pro", "Arial", sans;*/
-/*  font-size: 24px;*/
-/*}*/
 
 .dropdown-el {
   position: absolute;
@@ -303,13 +305,16 @@ footer {
   border: 1px solid #eef2f7;
   border-radius: 6px;
   background-color: #eef2f7;
+  z-index: 1;
 }
 .dropdown-el input:focus + label {
   background: #eef2f7;
 }
+
 .dropdown-el input {
   display: none;
 }
+
 .dropdown-el label {
   border-top: 0.06em solid #dddfe0;
   display: block;
@@ -322,13 +327,16 @@ footer {
   font-size: 17px;
   font-weight: 400;
 }
+
 .dropdown-el label:nth-child(2) {
   margin-top: 47px;
   border-top: 1px solid #dddfe0;
 }
+
 .dropdown-el input:not(:checked) + label:hover {
   background-color: #f8fafc;
 }
+
 .dropdown-el input:checked + label {
   display: block;
   border-top: none;
@@ -337,10 +345,12 @@ footer {
   width: 100%;
   height: 27px;
 }
+
 .dropdown-el input:checked + label:nth-child(2) {
   margin-top: 0;
   position: relative;
 }
+
 .dropdown-el::after {
   content: "";
   position: absolute;
@@ -352,22 +362,27 @@ footer {
   height: 7px;
   transform: rotate(45deg);
 }
+
 .dropdown-el.expanded {
   border: 1px solid #dddfe0;
   background: #fff;
   padding: 0;
   max-height: none;
 }
+
 .dropdown-el.expanded label {
   border-top: 0.06em solid #d9d9d9;
 }
+
 .dropdown-el.expanded::after {
   transform: rotate(-135deg);
 }
+
 #select-default:not(:checked) + label {
   max-height: 0;
   border: 0;
 }
+
 #select-default + label {
   height: 46px;
 }
@@ -375,6 +390,10 @@ footer {
 .form-submit {
   text-align: right;
 }
+
+/*
+* Buttons
+*/
 
 .base-button {
   font-size: 17px;

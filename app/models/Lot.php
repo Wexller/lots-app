@@ -19,7 +19,7 @@ class Lot extends Model {
 
     $params = [
       'id' => '',
-      'amount' => $post['amount'],
+      'amount' => round(floatval($post['amount']), 2),
       'rubles' => $rubles,
       'status' => 'new',
       'completed' => 0,
@@ -27,6 +27,7 @@ class Lot extends Model {
     ];
 
     $this->db->query('INSERT INTO lots VALUES (:id, :amount, :rubles, :status, :completed, :currency_id)', $params);
+    $this->updateCounter();
 
     return 'Лот успешно добавлен';
   }
@@ -39,15 +40,33 @@ class Lot extends Model {
       return $errors;
     }
 
-    $params = [
+    $paramsUpdate = [
       'id' => $_POST['id'],
       'status' => $_POST['status'],
       'completed' => 1,
     ];
 
-    $this->db->query('UPDATE lots SET status=:status, completed=:completed WHERE id=:id AND completed=0', $params);
+    $paramsCheck = [
+      'id' => $_POST['id']
+    ];
 
-    return 'Лот успешно оновлён';
+    // Если лот уже обновлён, то ничего не делаем
+    if (!boolval($this->db->column('SELECT completed FROM lots WHERE id=:id', $paramsCheck))) {
+      $this->db->query('UPDATE lots SET status=:status, completed=:completed WHERE id=:id', $paramsUpdate);
+      $this->updateCounter();
+      return 'Статус лота успешно обновлён';
+    } else {
+      return 'Лот уже обновлён!';
+    }
+  }
+
+  // Получение текущего значения
+  public function getCounter($id = 1) {
+    $params = [
+      'id' => $id
+    ];
+
+    return $this->db->column('SELECT value FROM counter WHERE id=:id', $params);
   }
 
   // Получение списка валют
@@ -66,6 +85,15 @@ class Lot extends Model {
     return $this->db->row("SELECT lots.id, amount, rubles, status, completed, name 
                                FROM lots JOIN currency ON lots.currency_id = currency.id $query 
                                ORDER BY lots.id ASC");
+  }
+
+  // Обновление счетчика измнений
+  private function updateCounter($id = 1) {
+    $params = [
+      'id' => $id
+    ];
+
+    $this->db->query('UPDATE counter SET value = value + 1 WHERE id=:id', $params);
   }
 
   // Объединение валидации для добавления и обновления лота
@@ -92,7 +120,7 @@ class Lot extends Model {
 
   // Конвертация валюты в рубли
   private function convertAmount($amount, $ratio) {
-    return round($amount * $ratio, 2);
+    return number_format($amount * $ratio, 2, '.', ' ');
   }
 
   // Валидация входящих параметров
